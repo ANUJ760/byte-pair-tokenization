@@ -1,7 +1,9 @@
+# A minimal implementation of BPE algorithm for subword tokenization
+
 from collections import Counter
 
 class BPE:
-    def __init__(self):
+    def __init__(self): # Initializes the BPE object (constructor method)
         self.id2token = {}
         self.token2id = {}
         self.merge = []
