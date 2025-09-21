@@ -50,6 +50,30 @@ class BPE:
             best = max(pairs, key=pairs.get) # Finds the pair with the highest frequency (most common pair)
             self.merges.append(best) # Adds the best pair to the list of merged pairs
             vocab = self.merge_pairs(best, vocab) # Merges the most common pair in the vocabulary
+            
+        token = set() # Stores the unique tokens
+        for symbol in vocab.keys():
+            token.update(symbol) # Adds the unique symbols in the vocabulary to the set of tokens
+        print(token)  
+        self.token2id = {token: idx for idx, token in enumerate(sorted(token))} # Converts the set of tokens to a dictionary of token IDs
+        self.id2token = {idx: token for idx, token in self.token2id.items()} # Converts the set of ids to a dictionary of token strings
+        
     
-
+    def EncodeWords(self, word):
+        symb = tuple(list(word) + ['</w>'])  # Adds an "end of the word" token '</w>' at the end of each word
+        for pair in self.merge:
+            i = 0
+            while i < len(symb) - 1:
+                if symb[i] == pair[0] and symb[i+1] == pair[1]:
+                    symb[i] = symb[i] + symb[i+1]   # If the pair is found, merge them
+                    del symb[i+1] # Removes the second symbol from the word as it has been merged
+                else:
+                    i += 1 # If the pair is not found, move to the next symbol in the word
+        return symb
+    def encode_sentence(self, sentences):
+        tokens, ids = [], [] # Stores the list of tokens and their IDs respectively
+        for word in sentences.split():
+            s = self.EncodeWords(word) # Encodes each word
+            tokens.extend(s) # Adds the encoded words to the list of tokens
+            ids.extend([self.token2id[t] for t in s]) # Adds the token IDs of the encoded words to the list of IDs
             
