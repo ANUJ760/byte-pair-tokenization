@@ -59,8 +59,8 @@ class BPE:
             token.update(symbol) # Adds the unique symbols in the vocabulary to the set of tokens
         print("Final Tokens:", token) 
         self.token2id = {token: idx for idx, token in enumerate(sorted(token))} # Converts the set of tokens to a dictionary of token IDs
-        self.id2token = {idx: token for idx, token in self.token2id.items()} # Converts the set of ids to a dictionary of token strings
-        
+        self.id2token = {idx: idx for idx, token in self.token2id.items()} # Converts the set of ids to a dictionary of token strings
+        print("Final Tokens:", sorted(token))
     
     def EncodeWords(self, word):
         symb = (list(word) + ['</w>'])  # Adds an "end of the word" token '</w>' at the end of each word
