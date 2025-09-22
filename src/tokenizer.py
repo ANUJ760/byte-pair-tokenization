@@ -6,7 +6,7 @@ class BPE:
     def __init__(self): # Initializes the BPE object (constructor method)
         self.id2token = {}
         self.token2id = {}
-        self.merge = []
+        self.merges = []
         
         
     def build_vocab(self, sentences):
@@ -33,7 +33,7 @@ class BPE:
         for symbol, freq in vocab.items():
             new_symb = []
             i = 0
-            while i < len(symbol) - 1:
+            while i < len(symbol):
                 if i < len(symbol) - 1 and (symbol[i], symbol[i+1]) == (x, y):
                     new_symb.append(symbol[i] + symbol[i+1])   # If the pair is found, merge them
                     i += 2
@@ -47,7 +47,7 @@ class BPE:
         vocab = self.build_vocab(sentences)
         self.merges = [] # Stores the merged pairs during training
         for _ in range(max_vocab_size):
-            pairs = self.get_attrributes(vocab)
+            pairs = self.get_attributes(vocab)
             if not pairs: # If no more pairs can be merged, break the loop
                 break
             best = max(pairs, key=pairs.get) # Finds the pair with the highest frequency (most common pair)
@@ -57,14 +57,14 @@ class BPE:
         token = set() # Stores the unique tokens
         for symbol in vocab.keys():
             token.update(symbol) # Adds the unique symbols in the vocabulary to the set of tokens
-        print(token)  
+        print("Final Tokens:", token) 
         self.token2id = {token: idx for idx, token in enumerate(sorted(token))} # Converts the set of tokens to a dictionary of token IDs
         self.id2token = {idx: token for idx, token in self.token2id.items()} # Converts the set of ids to a dictionary of token strings
         
     
     def EncodeWords(self, word):
-        symb = tuple(list(word) + ['</w>'])  # Adds an "end of the word" token '</w>' at the end of each word
-        for pair in self.merge:
+        symb = (list(word) + ['</w>'])  # Adds an "end of the word" token '</w>' at the end of each word
+        for pair in self.merges:
             i = 0
             while i < len(symb) - 1:
                 if symb[i] == pair[0] and symb[i+1] == pair[1]:
@@ -94,7 +94,6 @@ class BPE:
                 
         if current: # If there is any remaining token that hasn't been decoded, add it to the output
             output.append(current)
-        print(' '.join(output)) # Prints the decoded tokens sentence-wise
         return ' '.join(output) # Joins the tokens to form a sentence
             
     # This function can be used to test the minimal BPE implementation.
