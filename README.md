@@ -30,6 +30,11 @@ I used an AI assistant to handle repetitive tasks (like syntactical cleanup and 
 - Keeps the **vocabulary size manageable**  
 - A **fundamental solution** for tokenizing language in AI  
 
+  Drawbacks of this implementation:
+- Cannot handle special characters (eg ! , % $)  
+- Not an optimal implementation, slow, uses </w> for end of word, but cannot differentiate if "</w>"  is a part of data text.
+- Not suited for very large datasets (ie actual requirments)
+  
 ---
 
 ## ⚡ Notes
