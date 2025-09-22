@@ -1,25 +1,39 @@
 import argparse
 from tokenizer import BPE
+import re # regex for cleaning text
 
 def main():
     parser = argparse.ArgumentParser(description="Minimal BPE Tokenizer")
-    parser.add_argument("--corpus", type=str, default="../alice.txt", help="Path to input file")
+    parser.add_argument("--text", type=str, default="../alice.txt", help="path to input file")
     parser.add_argument("--merges", type=int, default=50, help="number of merges")
     parser.add_argument("--encode", type=str, help="text to encode")
     parser.add_argument("--decode", nargs='+', type=int, help="pids to decode")
     parser.add_argument("--save", action="store_true", help="save output to output.txt")
     args = parser.parse_args()
 
-    with open(args.corpus, "r", encoding="utf-8") as f:
-        corpus = f.read()
+    with open(args.text, "r", encoding="utf-8") as f:
+        text = f.read()
+
+   
+    #Replacing non-alphnumeric characters with a space
+    text_cleaned = re.sub(r'[^a-zA-Z0-9\s]', ' ', text)
+    
+    text_cleaned = text_cleaned.lower() #Convert to lowercase for consistent tokenization
+    #Replace multiple spaces with a single space
+    text_cleaned = re.sub(r'\s+', ' ', text_cleaned).strip() # strip leading and trailing spaces
 
     tokenizer = BPE()
-    tokenizer.train(corpus, args.merges)
+    
+    tokenizer.train(text_cleaned, args.merges)
 
-    outputs = []
+    outputs = [] # an empty list initialised to store the output of encoding and decoding
 
     if args.encode:
-        tokens, ids = tokenizer.encode_sentence(args.encode)
+        #for encoding, the input text should also be cleaned to match the training one
+        encode_text_cleaned = re.sub(r'[^a-zA-Z0-9\s]', ' ', args.encode).lower()
+        encode_text_cleaned = re.sub(r'\s+', ' ', encode_text_cleaned).strip()
+        
+        tokens, ids = tokenizer.encode_sentence(encode_text_cleaned)
         outputs.append(f"Encoded tokens: {tokens}")
         outputs.append(f"Encoded ids: {ids}")
 

@@ -61,6 +61,8 @@ class BPE:
         self.token2id = {token: idx for idx, token in enumerate(sorted(token))} # Converts the set of tokens to a dictionary of token IDs
         self.id2token = {idx: token for token, idx in self.token2id.items()} #Maps ID to token string
         print("Final Tokens:", sorted(token))
+        
+        
     def EncodeWords(self, word):
         symb = (list(word) + ['</w>'])  # Adds an "end of the word" token '</w>' at the end of each word
         for pair in self.merges:
