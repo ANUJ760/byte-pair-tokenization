@@ -98,4 +98,4 @@ class BPE:
             output.append(current)
         return ' '.join(output) # Joins the tokens to form a sentence
             
-    # This function can be used to test the minimal BPE implementation.
+    # This tokenizer can be used to test the minimal BPE implementation.
