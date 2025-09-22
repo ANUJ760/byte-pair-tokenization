@@ -14,6 +14,8 @@ This project is a **minimal implementation** of the algorithm, designed to **dem
 
 I used an AI assistant to handle repetitive tasks (like syntactical cleanup and text preprocessing), so I could focus entirely on the **algorithmic design and core logic** of the BPE algorithm itself.  
 
+## Note
+The text data used is just a smaller version of alice.txt dataset, which is used due to the smaller scale of the minimal BPE implementaion.
 ---
 
 ## 🚀 What’s Inside
