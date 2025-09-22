@@ -19,6 +19,7 @@ class BPE:
         return vocab
     
     def get_attributes(self, vocab):
+        
         pairs = Counter() # Stores the frequency of each symbol pair
         for symbol, freq in vocab.items():
             for i in range(len(symbol) - 1):
@@ -26,9 +27,9 @@ class BPE:
                 pairs[pair] += freq # Adds the frequency of the word (symbol) to each of the pairs in it
         return pairs
     
-    def merge_pairs(self, pairs, vocab):
-        merged_pairs = {}
-        x, y = pairs
+    def merge_pairs(self, pair, vocab):
+        merged_pair = {}
+        x, y = pair
         for symbol, freq in vocab.items():
             new_symb = []
             i = 0
@@ -39,15 +40,15 @@ class BPE:
                 else:
                     new_symb.append(symbol[i])  # If the pair is not found, add the symbol as it is
                     i += 1
-            merged_pairs[tuple(new_symb)] = merged_pairs.get(tuple(new_symb), 0) + freq # Adds the frequency of the merged word to the dictionary
-        return merged_pairs 
+            merged_pair[tuple(new_symb)] = merged_pair.get(tuple(new_symb), 0) + freq # Adds the frequency of the merged word to the dictionary
+        return merged_pair 
     
     def train(self, sentences, max_vocab_size=30):
         vocab = self.build_vocab(sentences)
         self.merges = [] # Stores the merged pairs during training
         for _ in range(max_vocab_size):
             pairs = self.get_attrributes(vocab)
-            if not pairs:
+            if not pairs: # If no more pairs can be merged, break the loop
                 break
             best = max(pairs, key=pairs.get) # Finds the pair with the highest frequency (most common pair)
             self.merges.append(best) # Adds the best pair to the list of merged pairs
@@ -78,4 +79,21 @@ class BPE:
             s = self.EncodeWords(word) # Encodes each word
             tokens.extend(s) # Adds the encoded words to the list of tokens
             ids.extend([self.token2id[t] for t in s]) # Adds the token IDs of the encoded words to the list of IDs
+        return tokens, ids
+    
+    def decode(self, ids):
+        output, current = [], ''
+        for idx in ids:
+            t = self.id2token[idx]
+            if t.endswith('</w>'):
+                current += t[:-4] # Removes the "end of the word" token '</w>' from the current token, as it has been decoded
+                output.append(current)
+                current = '' # Resets the current token so that the next decoded token starts from an empty word
+            else:
+                current += t # Adds the current character to the current token if it is not the end of the word token
+                
+        if current: # If there is any remaining token that hasn't been decoded, add it to the output
+            output.append(current)
+        print(' '.join(output)) # Prints the decoded tokens sentence-wise
+        return ' '.join(output) # Joins the tokens to form a sentence
             
