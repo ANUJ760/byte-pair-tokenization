@@ -82,7 +82,7 @@ class BPE:
         return tokens, ids
     
     def decode(self, ids):
-        output, current = [], ''
+        output, current = [], '' # Stores the decoded tokens and the current token being decoded
         for idx in ids:
             t = self.id2token[idx]
             if t.endswith('</w>'):
@@ -97,3 +97,4 @@ class BPE:
         print(' '.join(output)) # Prints the decoded tokens sentence-wise
         return ' '.join(output) # Joins the tokens to form a sentence
             
+    # This function can be used to test the minimal BPE implementation.
