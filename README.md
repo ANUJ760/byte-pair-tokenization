@@ -1,19 +1,43 @@
-## byte-pair-tokenization
-*Implementation of BPE tokenization algorithm from scratch (without tiktoken).*  
+<p align="center">
+  <img src="gdg_b.webp" alt="logo" width="100">
+</p>
 
+<h1 align="center">Byte Pair Tokenizer</h1>
 
-🌟 A BPE Tokenizer used in LLMs
--> A more optimised version is used by OpenAI for gpt models!
-This one is a minimal implementation of the algorithm. This project provides a demonstration of the core principles of subword tokenization, which is a crucial first step for all modern language models.
+---
 
-I've used an AI assistant to handle the more tedious parts of development, like syntactical cleanup and text preprocessing, allowing me to focus entirely on the algorithmic approach and core logic of the BPE algorithm itself.
+*Implementation of the BPE tokenization algorithm from scratch (without tiktoken).*  
 
-🚀 What's Inside
-tokenizer.py: The heart of the project, containing the BPE class with methods for training, encoding, and decoding.
+🌟 **A BPE Tokenizer used in LLMs**  
+👉 A more optimized version is used by OpenAI for GPT models!  
+This project is a **minimal implementation** of the algorithm, designed to **demonstrate the core principles of subword tokenization**—a crucial foundation for all modern language models.  
 
-main.py: A simple command-line interface client to interact with the tokenizer.
+I used an AI assistant to handle repetitive tasks (like syntactical cleanup and text preprocessing), so I could focus entirely on the **algorithmic design and core logic** of the BPE algorithm itself.  
 
-💡 Why BPE?
-BPE is a technique that creates a vocabulary of subword units (like "ing" or "tion") by iteratively merging the most frequent pairs of characters in a text. This approach solves two major problems: it handles new or complex words by breaking them down into familiar parts, and it keeps the vocabulary size manageable. It's a solution to a fundamental problem in AI.
+---
 
-A simpler way to use this algorithm is through the tiktoken library, which is the more widely used implementation, as it does not require "from scratch" and implementaions and focuses on outputs.
+## 🚀 What’s Inside
+- **`tokenizer.py`** → The heart of the project, containing the `BPE` class with methods for training, encoding, and decoding.  
+- **`main.py`** → A simple CLI client to interact with the tokenizer.  
+
+---
+
+## 💡 Why BPE?
+**Byte Pair Encoding (BPE)** creates a vocabulary of **subword units** (like *"ing"* or *"tion"*) by iteratively merging the most frequent pairs of characters in a text.  
+
+✅ Benefits:  
+- Handles **new or complex words** by breaking them into familiar sub-parts  
+- Keeps the **vocabulary size manageable**  
+- A **fundamental solution** for tokenizing language in AI  
+
+---
+
+## ⚡ Notes
+- A simpler way to use this algorithm in real-world projects is via [**tiktoken**](https://github.com/openai/tiktoken), OpenAI’s optimized implementation.  
+- This repo focuses on a **from-scratch educational approach**, so you can truly understand how BPE works under the hood.  
+
+---
+
+<p align="center">
+  Made using Python
+</p>
