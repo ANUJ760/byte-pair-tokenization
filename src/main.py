@@ -45,7 +45,7 @@ def main():
     print(result)
 
     if args.save:
-        with open("../output.txt", "w", encoding="utf-8") as f:
+        with open("../output.txt", "w", encoding="utf-8") as f: # Change the type to append "a" for appending to the file, ie have both encoding and decoding in the same file
             f.write(result)
 
 if __name__ == "__main__":
