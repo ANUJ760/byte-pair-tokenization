@@ -59,9 +59,8 @@ class BPE:
             token.update(symbol) # Adds the unique symbols in the vocabulary to the set of tokens
         print("Final Tokens:", token) 
         self.token2id = {token: idx for idx, token in enumerate(sorted(token))} # Converts the set of tokens to a dictionary of token IDs
-        self.id2token = {idx: idx for idx, token in self.token2id.items()} # Converts the set of ids to a dictionary of token strings
+        self.id2token = {idx: token for token, idx in self.token2id.items()} #Maps ID to token string
         print("Final Tokens:", sorted(token))
-    
     def EncodeWords(self, word):
         symb = (list(word) + ['</w>'])  # Adds an "end of the word" token '</w>' at the end of each word
         for pair in self.merges:
@@ -80,6 +79,7 @@ class BPE:
             tokens.extend(s) # Adds the encoded words to the list of tokens
             ids.extend([self.token2id[t] for t in s]) # Adds the token IDs of the encoded words to the list of IDs
         return tokens, ids
+    
     
     def decode(self, ids):
         output, current = [], '' # Stores the decoded tokens and the current token being decoded
