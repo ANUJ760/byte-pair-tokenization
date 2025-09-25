@@ -1,6 +1,3 @@
-<p align="center">
-  <img src="gdg_b.webp" alt="logo" width="100">
-</p>
 
 <h1 align="center">Byte Pair Tokenizer</h1>
 
